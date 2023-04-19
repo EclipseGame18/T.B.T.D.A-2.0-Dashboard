@@ -70,5 +70,5 @@ client.on('ready', async() => {
 	await mongo()
 });
 
-client.login('NzEyOTU4MTYwNjIwNzQ4ODIw.XsZIBw.JpmUwXJLdqankzvgYwcodVxTUzY');
+client.login(process.env.BOT_USER_TOKEN);
 //http:localhost/auth/login
