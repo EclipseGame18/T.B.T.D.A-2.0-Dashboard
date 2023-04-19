@@ -6,6 +6,15 @@ const client = new Client({ intents: [
 const GuildPrefix = require('./Guild')
 const ToggleAntiSware = require('./Guild2')
 const mongo = require('./mongo');
+let initbuffer
+(() => async () => {
+    const favicon = await fetch('https://i.ibb.co/L8sZqxX/favImg.png');
+    const arrayBuffer = await favicon.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+    initbuffer = buffer
+})();
+
+
 
 // Requires Dashboard class from discord-easy-dashboard
 const Dashboard = require("discord-easy-dashboard");
@@ -19,11 +28,13 @@ const dashboard = new Dashboard(client, {
     noPortIncallbackUrl: true,
     secret: 'juH1-p1AUO7Yqi3PlVn6tDF73zhLXV53',
     theme: 'dark',
+    faviconPath: initbuffer,
     serverUrl: 'https://discord.gg/3mkKSGw',
     permissions: ['ManageGuild']
     
 });
 client.dashboard = dashboard
+
 
 // We now have a dashboard property to access everywhere!
 
