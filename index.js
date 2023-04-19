@@ -20,7 +20,6 @@ const dashboard = new Dashboard(client, {
     secret: 'juH1-p1AUO7Yqi3PlVn6tDF73zhLXV53',
     theme: 'dark',
     serverUrl: 'https://discord.gg/3mkKSGw',
-    faviconPath: 'favimg.png',
     permissions: ['ManageGuild']
     
 });
