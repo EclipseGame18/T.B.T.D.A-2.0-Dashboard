@@ -20,7 +20,7 @@ const dashboard = new Dashboard(client, {
     secret: 'juH1-p1AUO7Yqi3PlVn6tDF73zhLXV53',
     theme: 'dark',
     serverUrl: 'https://discord.gg/3mkKSGw',
-    faviconPath: 'https://ibb.co/kQv3466',
+    faviconPath: 'favimg.png',
     permissions: ['ManageGuild']
     
 });
@@ -70,5 +70,5 @@ client.on('ready', async() => {
 	await mongo()
 });
 
-client.login(process.env.BOT_USER_TOKEN);
+client.login(process.env.BOT_DASH_TOKEN);
 //http:localhost/auth/login
