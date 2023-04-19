@@ -13,7 +13,7 @@ const Dashboard = require("discord-easy-dashboard");
 // Initialise it
 const dashboard = new Dashboard(client, {
     name: 'T.B.T.D.A',
-    description: `This is T.B.T.D.A's web dashboard! Here you can controle the core features of the bot. Click on 'Login to access the dashboard' to get started! Need help with the bot? Click on 'Discord Server' to join our support server!`,
+    description: `This is T.B.T.D.A's web dashboard! Here you can controle the core features of the bot. Click on 'Login to access the dashboard' to get started! Need help with the bot? Click on 'Discord Server' to join our support server! THIS BOT IS IN BETA TESTING FOR VERSION 2.0, THE INVITE LINK WILL TAKE YOU TO THE WRONG BOT. Please join the support server for more info!`,
     baseUrl: 'https://tbtda.xyz', // Leave this if ur in local development
     port: process.env.PORT,
     noPortIncallbackUrl: true,
