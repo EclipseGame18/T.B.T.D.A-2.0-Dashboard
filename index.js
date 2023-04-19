@@ -15,7 +15,7 @@ const dashboard = new Dashboard(client, {
     name: 'T.B.T.D.A',
     description: `This is T.B.T.D.A's web dashboard! Here you can controle the core features of the bot. Click on 'Login to access the dashboard' to get started! Need help with the bot? Click on 'Discord Server' to join our support server!`,
     baseUrl: 'http://localhost', // Leave this if ur in local development
-    port: 80,
+    port: process.env.PORT,
     noPortIncallbackUrl: true,
     secret: 'juH1-p1AUO7Yqi3PlVn6tDF73zhLXV53',
     theme: 'dark',
