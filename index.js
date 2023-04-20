@@ -142,7 +142,7 @@ const mongo = require('./mongo');
     }
 
 
-    client.dashboard.addTextInput('New member welcome channel', "Enter the channel ID (e.g. 1234567891112131415) where T.B.T.D.A will send the welcome message, leave blank to disable", channelvalidator, channelsetter, channelgetter) 
+    client.dashboard.addTextInput('Log and welcome channel', "Enter the channel ID (e.g. 1234567891112131415) where T.B.T.D.A will send logs and welcomes, leave blank to disable", channelvalidator, channelsetter, channelgetter) 
  
         
 
