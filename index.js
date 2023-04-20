@@ -5,6 +5,7 @@ const client = new Client({ intents: [
 ] });
 const GuildPrefix = require('./Guild')
 const ToggleAntiSware = require('./Guild2')
+const GuildWelcome = require('./Guild3')
 const mongo = require('./mongo');
 
 (async () => {
@@ -21,7 +22,7 @@ const mongo = require('./mongo');
     const dashboard = new Dashboard(client, {
         name: 'T.B.T.D.A',
         description: `This is T.B.T.D.A's web dashboard! Here you can controle the core features of the bot. Click on 'Login to access the dashboard' to get started! Need help with the bot? Click on 'Discord Server' to join our support server! THIS BOT IS IN BETA TESTING FOR VERSION 2.0, THE INVITE LINK WILL TAKE YOU TO THE WRONG BOT. Please join the support server for more info!`,
-        baseUrl: 'https://tbtda.xyz', // Leave this if ur in local development
+        baseUrl: process.env.REDIRECT_URI, // Leave this if ur in local development
         port: process.env.PORT,
         noPortIncallbackUrl: true,
         secret: 'juH1-p1AUO7Yqi3PlVn6tDF73zhLXV53',
@@ -71,6 +72,41 @@ const mongo = require('./mongo');
             }}
 
     client.dashboard.addBooleanInput('Toggle sware detection', "Toggle the anti-swear on or off!", setToggle, getToggle);
+
+    const msgvalidator = (value) => value.length < 50
+
+    const msggetter = async(discordClient, guild) =>{
+        const guildWelcome = await GuildWelcome.findOne({_id: guild.id}).catch(error =>{
+            console.log(`There was a error: ${error}`)
+            })
+            if(!guildWelcome){
+                await GuildWelcome.findOneAndUpdate({
+                    _id: guild.id
+                    },{
+                    _id: guild.id,
+                    message: '',
+                        
+                    },{
+                        upsert: true
+                    })
+                
+            }
+            return guildWelcome.message
+    }
+    const msgsetter = async(discordClient, guild, value) => {
+        await GuildWelcome.findOneAndUpdate({
+            _id: guild.id
+            },{
+            _id: guild.id,
+            message: value,
+                
+            },{
+                upsert: true
+            })
+    }
+
+
+    client.dashboard.addTextInput('New member welcome message', "Send a welcome message when a new member joins your server, leave blank to disable. Max 50 characters", msgvalidator, msgsetter, msggetter) 
         
         
 

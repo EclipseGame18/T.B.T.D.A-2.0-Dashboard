@@ -9,7 +9,7 @@ module.exports = async () => {
     }).then(()=>{
         console.log('Connected to MongoDB!')
     }).catch((err) =>{
-        console.log(err)
+        console.log('There was an error connecting to Mongodb:' + err)
     })
     return mongoose
 }
