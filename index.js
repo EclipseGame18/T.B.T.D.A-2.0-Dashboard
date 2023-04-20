@@ -1,4 +1,4 @@
-const {Client, GatewayIntentBits} = require('discord.js');
+const {Client, GatewayIntentBits, ActivityType} = require('discord.js');
 const client = new Client({ intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMembers,
