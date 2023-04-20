@@ -6,6 +6,7 @@ const client = new Client({ intents: [
 const GuildPrefix = require('./Guild')
 const ToggleAntiSware = require('./Guild2')
 const GuildWelcome = require('./Guild3')
+const GuildWelcomeChannel = require('./Guild4')
 const mongo = require('./mongo');
 
 (async () => {
@@ -107,7 +108,42 @@ const mongo = require('./mongo');
 
 
     client.dashboard.addTextInput('New member welcome message', "Send a welcome message when a new member joins your server, leave blank to disable. Max 50 characters", msgvalidator, msgsetter, msggetter) 
-        
+      
+    const channelvalidator = (value) => value.length < 20
+
+    const channelgetter = async(discordClient, guild) =>{
+        const guildWelcomechannel = await GuildWelcomeChannel.findOne({_id: guild.id}).catch(error =>{
+            console.log(`There was a error: ${error}`)
+            })
+            if(!guildWelcomechannel){
+                await GuildWelcomeChannel.findOneAndUpdate({
+                    _id: guild.id
+                    },{
+                    _id: guild.id,
+                    channel: '',
+                        
+                    },{
+                        upsert: true
+                    })
+                
+            }
+            return guildWelcomechannel.channel
+    }
+    const channelsetter = async(discordClient, guild, value) => {
+        await GuildWelcomeChannel.findOneAndUpdate({
+            _id: guild.id
+            },{
+            _id: guild.id,
+            channel: value,
+                
+            },{
+                upsert: true
+            })
+    }
+
+
+    client.dashboard.addTextInput('New member welcome channel', "Enter the channel ID where T.B.T.D.A will send the welcome message, leave blank to disable", channelvalidator, channelsetter, channelgetter) 
+ 
         
 
     client.on('ready', async() => {
