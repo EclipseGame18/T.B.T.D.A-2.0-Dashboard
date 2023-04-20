@@ -7,7 +7,8 @@ const GuildPrefix = require('./Guild')
 const ToggleAntiSware = require('./Guild2')
 const mongo = require('./mongo');
 
-async function init() {
+(async () => {
+
     const favicon = await fetch('https://i.ibb.co/L8sZqxX/favImg.png');
     const arrayBuffer = await favicon.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
@@ -70,14 +71,18 @@ async function init() {
             }}
 
     client.dashboard.addBooleanInput('Toggle sware detection', "Toggle the anti-swear on or off!", setToggle, getToggle);
-        }
+        
+        
 
     client.on('ready', async() => {
         console.log(`Logged in as ${client.user.tag}`)
         console.log(`The web dashboard is online and ready. Dashboard avalable at: https://tbtda.xyz`);
         await mongo()
-        init()
+
     });
 
 client.login(process.env.BOT_DASH_TOKEN);
+
+})()
 //http:localhost/auth/login
+//https://tbtda.xyz/auth/login
