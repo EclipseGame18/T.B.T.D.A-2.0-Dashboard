@@ -74,7 +74,7 @@ const mongo = require('./mongo');
 
     client.dashboard.addBooleanInput('Toggle sware detection', "Toggle the anti-swear on or off!", setToggle, getToggle);
 
-    const msgvalidator = (value) => value.length < 50
+    const msgvalidator = (value) => value.length < 100
 
     const msggetter = async(discordClient, guild) =>{
         const guildWelcome = await GuildWelcome.findOne({_id: guild.id}).catch(error =>{
@@ -107,9 +107,9 @@ const mongo = require('./mongo');
     }
 
 
-    client.dashboard.addTextInput('New member welcome message', "Send a welcome message when a new member joins your server, leave blank to disable. Max 50 characters", msgvalidator, msgsetter, msggetter) 
+    client.dashboard.addTextInput('New member welcome message', "Send a welcome message when a new member joins your server, leave blank to disable. Max 100 characters, use {member} to insert the member's username", msgvalidator, msgsetter, msggetter) 
       
-    const channelvalidator = (value) => value.length < 20
+    const channelvalidator = (value) => value.length < 30
 
     const channelgetter = async(discordClient, guild) =>{
         const guildWelcomechannel = await GuildWelcomeChannel.findOne({_id: guild.id}).catch(error =>{
@@ -142,7 +142,7 @@ const mongo = require('./mongo');
     }
 
 
-    client.dashboard.addTextInput('New member welcome channel', "Enter the channel ID where T.B.T.D.A will send the welcome message, leave blank to disable", channelvalidator, channelsetter, channelgetter) 
+    client.dashboard.addTextInput('New member welcome channel', "Enter the channel ID (e.g. 1234567891112131415) where T.B.T.D.A will send the welcome message, leave blank to disable", channelvalidator, channelsetter, channelgetter) 
  
         
 
