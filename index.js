@@ -150,6 +150,15 @@ const mongo = require('./mongo');
         console.log(`Logged in as ${client.user.tag}`)
         console.log(`The web dashboard is online and ready. Dashboard avalable at: https://tbtda.xyz`);
         await mongo()
+        client.user?.setPresence({
+            status: 'idle',
+            activities: [
+                {
+                    name: "Under development",
+                    type: ActivityType.Playing,
+                }
+            ]
+        })
 
     });
 
