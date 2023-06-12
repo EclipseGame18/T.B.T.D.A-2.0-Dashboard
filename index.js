@@ -241,10 +241,5 @@ const mongo = require('./mongo');
 client.login(process.env.BOT_USER_TOKEN);
 
 })()
-<<<<<<< HEAD
 // http:localhost/auth/login
 // https://tbtda.xyz/auth/login
-=======
-//http:localhost/auth/login
-//https://tbtda.xyz/auth/login
->>>>>>> 907abb38d2035c72349e2cf05002a6d641ff2ad2
