@@ -28,7 +28,7 @@ const mongo = require('./mongo');
         baseUrl: process.env.REDIRECT_URI, // Leave this if ur in local development
         port: process.env.PORT,
         noPortIncallbackUrl: true,
-        secret: process.env.BOT_SECRET,
+        secret: 'juH1-p1AUO7Yqi3PlVn6tDF73zhLXV53',
         theme: 'dark',
         faviconPath: buffer,
         serverUrl: 'https://discord.gg/3mkKSGw',
