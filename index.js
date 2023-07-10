@@ -1,14 +1,15 @@
-const {Client, GatewayIntentBits, ActivityType} = require('discord.js');
+const {Client, GatewayIntentBits, ActivityType, ThreadAutoArchiveDuration} = require('discord.js');
 const client = new Client({ intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMembers,
 ] });
-const GuildPrefix = require('./Guild')
-const ToggleAntiSware = require('./Guild2')
-const GuildWelcome = require('./Guild3')
-const GuildWelcomeChannel = require('./Guild4')
-const toggleMusic = require(`./Guild5`)
-const toggleEco = require(`./Guild6`)
+const GuildPrefix = require('./Guild');
+const ToggleAntiSware = require('./Guild2');
+const GuildWelcome = require('./Guild3');
+const GuildWelcomeChannel = require('./Guild4');
+const toggleMusic = require(`./Guild5`);
+const toggleEco = require(`./Guild6`);
+const LogChannel = require(`./Guild7`);
 const mongo = require('./mongo');
 
 (async () => {
@@ -52,6 +53,7 @@ const mongo = require('./mongo');
             })
     }
     const getToggle = async(discordClient, guild) => {
+        let returnswear
         const toggleSware = await ToggleAntiSware.findOne({_id: guild.id}).catch(error =>{
             console.log(`There was a error: ${error}`)
             })
@@ -66,7 +68,8 @@ const mongo = require('./mongo');
                     },{
                         upsert: true
                     })
-                
+                returnswear = false
+                return returnswear
             }
                 if (toggleSware.toggle == 'true'){
                     return true;
@@ -88,6 +91,7 @@ const mongo = require('./mongo');
             })
     }
     const getMusic = async(discordClient, guild) => {
+        let returnmusic
         const toggleMusicget = await toggleMusic.findOne({_id: guild.id}).catch(error =>{
             console.log(`There was a error: ${error}`)
             })
@@ -102,6 +106,8 @@ const mongo = require('./mongo');
                     },{
                         upsert: true
                     })
+                    returnmusic = true
+                    return returnmusic
                 
             }
                 if (toggleMusicget.toggle == 'true'){
@@ -124,6 +130,7 @@ const mongo = require('./mongo');
             })
     }
     const getEco = async(discordClient, guild) => {
+        let returneco
         const toggleEcoget = await toggleEco.findOne({_id: guild.id}).catch(error =>{
             console.log(`There was a error: ${error}`)
             })
@@ -138,7 +145,8 @@ const mongo = require('./mongo');
                     },{
                         upsert: true
                     })
-                
+                returneco = true
+                return returneco
             }
                 if (toggleEcoget.toggle == 'true'){
                     return true;
@@ -153,6 +161,7 @@ const mongo = require('./mongo');
     const msgvalidator = (value) => value.length < 200
 
     const msggetter = async(discordClient, guild) =>{
+        let returnwelcome
         const guildWelcome = await GuildWelcome.findOne({_id: guild.id}).catch(error =>{
             console.log(`There was a error: ${error}`)
             })
@@ -166,7 +175,8 @@ const mongo = require('./mongo');
                     },{
                         upsert: true
                     })
-                
+                returnwelcome = 'An error occured, please reload this page.'
+                return returnwelcome
             }
             return guildWelcome.message
     }
@@ -188,6 +198,7 @@ const mongo = require('./mongo');
     const channelvalidator = (value) => value.length < 30
 
     const channelgetter = async(discordClient, guild) =>{
+        let returnwelcomechannel
         const guildWelcomechannel = await GuildWelcomeChannel.findOne({_id: guild.id}).catch(error =>{
             console.log(`There was a error: ${error}`)
             })
@@ -201,7 +212,8 @@ const mongo = require('./mongo');
                     },{
                         upsert: true
                     })
-                
+                returnwelcomechannel = 'An error occured, please reload this page.'
+                return returnwelcomechannel
             }
             return guildWelcomechannel.channel
     }
@@ -218,9 +230,46 @@ const mongo = require('./mongo');
     }
 
 
-    client.dashboard.addTextInput('Log and welcome channel', "Enter the channel ID (e.g. 1234567891112131415) where T.B.T.D.A will send logs and welcomes, leave blank to disable", channelvalidator, channelsetter, channelgetter) 
+    client.dashboard.addTextInput('Welcome channel', "Enter the channel ID (e.g. 1234567891112131415) where T.B.T.D.A will send welcomes, leave blank to disable", channelvalidator, channelsetter, channelgetter) 
  
-        
+    const channelvalidator2 = (value) => value.length < 30
+
+    const channelgetter2 = async(discordClient, guild) =>{
+        let returnlog;
+        const logChannel = await LogChannel.findOne({_id: guild.id}).catch(error =>{
+            console.log(`There was a error: ${error}`)
+            })
+            if(!logChannel){
+                await LogChannel.findOneAndUpdate({
+                    _id: guild.id
+                    },{
+                    _id: guild.id,
+                    channel: '',
+                        
+                    },{
+                        upsert: true
+                    })
+                returnlog = 'An error occured, please reload this page.'
+                return returnlog
+            }
+            returnlog = logChannel.channel
+            return returnlog
+    }
+    const channelsetter2 = async(discordClient, guild, value) => {
+        await LogChannel.findOneAndUpdate({
+            _id: guild.id
+            },{
+            _id: guild.id,
+            channel: value,
+                
+            },{
+                upsert: true
+            })
+    }
+
+
+    client.dashboard.addTextInput('Log channel', "Enter the channel ID (e.g. 1234567891112131415) where T.B.T.D.A will send logs, leave blank to disable", channelvalidator2, channelsetter2, channelgetter2) 
+ 
 
     client.on('ready', async() => {
         console.log(`Logged in as ${client.user.tag}`)
