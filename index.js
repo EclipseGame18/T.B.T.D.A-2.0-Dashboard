@@ -193,7 +193,7 @@ const mongo = require('./mongo');
     }
 
 
-    client.dashboard.addTextInput('New member welcome message', "Send a welcome message when a new member joins your server, leave blank to disable. Max 200 characters, use {member} to insert the member's username", msgvalidator, msgsetter, msggetter) 
+    client.dashboard.addTextInput('New member welcome message', "Send a welcome message when a new member joins your server, leave blank to disable. Max 200 characters, use {member} for username, and {ping-member} to ping the user.", msgvalidator, msgsetter, msggetter) 
       
     const channelvalidator = (value) => value.length < 30
 
@@ -230,7 +230,7 @@ const mongo = require('./mongo');
     }
 
 
-    client.dashboard.addTextInput('Welcome channel', "Enter the channel ID (e.g. 1234567891112131415) where T.B.T.D.A will send welcomes, leave blank to disable", channelvalidator, channelsetter, channelgetter) 
+    client.dashboard.addTextInput('Welcome channel', "Enter the channel ID (e.g. 1234567891112131415) where T.B.T.D.A will send welcomes, leave blank to disable.", channelvalidator, channelsetter, channelgetter) 
  
     const channelvalidator2 = (value) => value.length < 30
 
@@ -268,7 +268,7 @@ const mongo = require('./mongo');
     }
 
 
-    client.dashboard.addTextInput('Log channel', "Enter the channel ID (e.g. 1234567891112131415) where T.B.T.D.A will send logs, leave blank to disable", channelvalidator2, channelsetter2, channelgetter2) 
+    client.dashboard.addTextInput('Log channel', "Enter the channel ID (e.g. 1234567891112131415) where T.B.T.D.A will send logs, leave blank to disable.", channelvalidator2, channelsetter2, channelgetter2) 
  
 
     client.on('ready', async() => {
