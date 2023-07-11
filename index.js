@@ -10,6 +10,7 @@ const GuildWelcomeChannel = require('./Guild4');
 const toggleMusic = require(`./Guild5`);
 const toggleEco = require(`./Guild6`);
 const LogChannel = require(`./Guild7`);
+const toggleImage = require('./Guild8')
 const mongo = require('./mongo');
 
 (async () => {
@@ -40,6 +41,7 @@ const mongo = require('./mongo');
 
 
     // We now have a dashboard property to access everywhere!
+
 
     const setToggle = async(discordClient, guild, value) => {
         await ToggleAntiSware.findOneAndUpdate({
@@ -157,6 +159,83 @@ const mongo = require('./mongo');
 
     client.dashboard.addBooleanInput('Toggle economy plugin', 'Toggle economy commands on or off, defult on.', setEco, getEco)
 
+    const setImg = async(discordClient, guild, value) => {
+        await toggleImage.findOneAndUpdate({
+            _id: guild.id
+            },{
+            _id: guild.id,
+            toggle: value,
+                
+            },{
+                upsert: true
+            })
+    }
+    const getImg = async(discordClient, guild) => {
+        let returneco
+        const toggleImgGet = await toggleImage.findOne({_id: guild.id}).catch(error =>{
+            console.log(`There was a error: ${error}`)
+            })
+
+            if(!toggleImgGet){
+                await toggleImage.findOneAndUpdate({
+                    _id: guild.id
+                    },{
+                    _id: guild.id,
+                    toggle: true,
+                        
+                    },{
+                        upsert: true
+                    })
+                returneco = true
+                return returneco
+            }
+                if (toggleImgGet.toggle == 'true'){
+                    return true;
+                } else{
+                    return false;
+            }}
+
+
+    client.dashboard.addBooleanInput('Toggle image plugin', 'Toggle image commands on or off, defult on.', setImg, getImg)
+
+
+    const prefixValidator = (value) => value.length < 4
+
+    const prefixGetter = async(discordClient, guild) =>{
+        let returnwelcome
+        const guildPrefix = await GuildPrefix.findOne({_id: guild.id}).catch(error =>{
+            console.log(`There was a error: ${error}`)
+            })
+            if(!guildPrefix){
+                await GuildPrefix.findOneAndUpdate({
+                    _id: guild.id
+                    },{
+                    _id: guild.id,
+                    prefix: '!',
+                        
+                    },{
+                        upsert: true
+                    })
+                returnwelcome = '!'
+                return returnwelcome
+            }
+            return guildPrefix.prefix
+    }
+    const prefixSetter = async(discordClient, guild, value) => {
+        await GuildPrefix.findOneAndUpdate({
+            _id: guild.id
+            },{
+            _id: guild.id,
+            prefix: value,
+                
+            },{
+                upsert: true
+            })
+    }
+
+
+    client.dashboard.addTextInput('Guild prefix', "Set the desired legacy command prefix for your server. Max 3 characters.", prefixValidator, prefixSetter, prefixGetter)
+
 
     const msgvalidator = (value) => value.length < 200
 
@@ -175,7 +254,7 @@ const mongo = require('./mongo');
                     },{
                         upsert: true
                     })
-                returnwelcome = 'An error occured, please reload this page.'
+                returnwelcome = ''
                 return returnwelcome
             }
             return guildWelcome.message
@@ -212,7 +291,7 @@ const mongo = require('./mongo');
                     },{
                         upsert: true
                     })
-                returnwelcomechannel = 'An error occured, please reload this page.'
+                returnwelcomechannel = ''
                 return returnwelcomechannel
             }
             return guildWelcomechannel.channel
@@ -249,7 +328,7 @@ const mongo = require('./mongo');
                     },{
                         upsert: true
                     })
-                returnlog = 'An error occured, please reload this page.'
+                returnlog = ''
                 return returnlog
             }
             returnlog = logChannel.channel
