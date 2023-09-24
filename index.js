@@ -26,7 +26,7 @@ const mongo = require('./mongo');
     // Initialise it
     const dashboard = new Dashboard(client, {
         name: 'T.B.T.D.A',
-        description: `This is T.B.T.D.A's web dashboard! Here you can controle the core features of the bot. Click on 'Login' to access the dashboard and get started! Need help with the bot? Click on 'Discord Server' to join our support server!`,
+        description: `This is T.B.T.D.A's web dashboard! Here you can controle the core features of the bot. Click on 'Login' to access the dashboard and get started! Need help with the bot? Click on 'Discord Server' to join our support server! For full documentation, please visit https://docs.tbtda.xyz`,
         baseUrl: process.env.REDIRECT_URI, // Leave this if ur in local development
         port: process.env.PORT,
         noPortIncallbackUrl: true,
