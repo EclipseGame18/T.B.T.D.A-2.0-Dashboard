@@ -35,8 +35,6 @@ const mongo = require('./mongo');
         faviconPath: buffer,
         serverUrl: 'https://discord.gg/3mkKSGw',
         permissions: ['ManageGuild'],
-        sslKey: '/usr/local/etc/letsencrypt/live/tbtda.xyz/privkey.pem',
-        sslcert: '/usr/local/etc/letsencrypt/live/tbtda.xyz/fullchain.pem'
         
     });
     client.dashboard = dashboard
